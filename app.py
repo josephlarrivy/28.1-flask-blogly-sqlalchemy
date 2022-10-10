@@ -1,31 +1,39 @@
 from flask import Flask, request, render_template, redirect
-from models import db, connect_db, User
 from flask_debugtoolbar import DebugToolbarExtension
-
+from models import db, connect_db, User
 
 app = Flask(__name__)
 if __name__ == '__main__':
     app.run()
 
-
-app.config['SECRET_KEY'] = "asoihffsadf"
-
-debug = DebugToolbarExtension(app)
-app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
-
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_ECHO'] = True
+app.config['SECRET_KEY'] = "asoihffsadf"
+
+# debug = DebugToolbarExtension(app)
+# app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+# app.config['SQLALCHEMY_ECHO'] = True
 
 connect_db(app)
 db.create_all()
 
 
+
+
+
+
+
 @app.route("/")
-def list_users():
+def root():
     """lists all users in DB"""
-    users = User.query.all()
-    return render_template("users.html", users=users)
+    # users = User.query.all()
+    # return render_template("users.html", users=users)
+    return redirect("/users")
+
+@app.route('/users')
+def show_users():
+    users = User.query.order_by(User.last_name, User.first_name).all()
+    return render_template('users.html', users=users)
 
 
 @app.route('/add_user', methods=["POST"])
@@ -38,4 +46,4 @@ def add_user():
     db.session.add(user)
     db.session.commit()
 
-    return redirect(f"/{user.id}")
+    return redirect(f"/users")

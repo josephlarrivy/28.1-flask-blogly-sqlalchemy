@@ -6,8 +6,12 @@
 <h1>Users</h1>
 <ul>
     {%for user in users%}
-    <li>{{user.name}}</li>
+    <!-- need to make users link to their user info -->
+    <li>{{user.first_name}} {{user.last_name}}</li>
     {%endfor%}
 </ul>
+
+<!-- need to make button work -->
+<button>Add User</button>
 
 {%endblock%}

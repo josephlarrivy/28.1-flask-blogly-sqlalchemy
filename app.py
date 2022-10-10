@@ -8,9 +8,11 @@ if __name__ == '__main__':
     app.run()
 
 
-app.config['SECRET_KEY'] = "asoihfbasjbdfsadf"
+app.config['SECRET_KEY'] = "asoihffsadf"
 
 debug = DebugToolbarExtension(app)
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True

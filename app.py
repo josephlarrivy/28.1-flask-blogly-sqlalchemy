@@ -23,17 +23,28 @@ db.create_all()
 
 
 
-@app.route("/")
+@app.route("/", methods=["GET"])
 def root():
     """lists all users in DB"""
     # users = User.query.all()
     # return render_template("users.html", users=users)
     return redirect("/users")
 
-@app.route('/users')
+@app.route('/users', methods=['GET'])
 def show_users():
     users = User.query.order_by(User.last_name, User.first_name).all()
     return render_template('users.html', users=users)
+
+
+@app.route('/add_user', methods=["GET"])
+def add_user():
+    first_name = request.form['first_name']
+    last_name = request.form['last_name']
+    url = request.form['url']
+
+    user = User(first_name=first_name, last_name=last_name, url=url)
+    db.session.add(user)
+    db.session.commit()
 
 
 @app.route('/add_user', methods=["POST"])
@@ -47,3 +58,7 @@ def add_user():
     db.session.commit()
 
     return redirect(f"/users")
+
+
+@app.route('/users/<int:id>')
+def show_user_details:

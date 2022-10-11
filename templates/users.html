@@ -7,7 +7,7 @@
 <ul>
     {%for user in users%}
     <!-- need to make users link to their user info -->
-    <li>{{user.first_name}} {{user.last_name}}</li>
+    <li><a href="/users/{{user.id}}">{{user.first_name}} {{user.last_name}}</a></li>
     {%endfor%}
 </ul>
 

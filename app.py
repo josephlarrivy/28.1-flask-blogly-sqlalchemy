@@ -17,18 +17,15 @@ app.config['SECRET_KEY'] = "asoihffsadf"
 connect_db(app)
 db.create_all()
 
-
-
-
-
-
-
 @app.route("/", methods=["GET"])
 def root():
     """lists all users in DB"""
     # users = User.query.all()
     # return render_template("users.html", users=users)
     return redirect("/users")
+
+
+
 
 @app.route('/users', methods=['GET'])
 def show_users():
@@ -57,8 +54,15 @@ def add_user():
     db.session.add(user)
     db.session.commit()
 
-    return redirect(f"/users")
+    return redirect("/users")
 
 
-@app.route('/users/<int:id>')
-def show_user_details:
+@app.route('/users/<int:user_id>', methods=["GET"])
+def show_user(user_id):
+    user = User.query.get_or_404(user_id)
+    return render_template('user_by_id.html', user=user)
+
+@app.route('/users/<int:user_id/edit', methods=["GET"])
+def edit_user(user_id):
+    user = User.query.get_or_404(user_id)
+    return render_template('/edit_users')

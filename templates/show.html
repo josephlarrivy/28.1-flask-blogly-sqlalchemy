@@ -1,0 +1,16 @@
+{%extends 'base.html'%}
+
+{%block title%}Users{%endblock%}
+
+{%block content%}
+
+{% if user.image_url %}
+<img src="{{ user.image_url }}" alt="{{ user.full_name }}" class="img-fluid">
+{%endif%}
+
+<p>{{user.full_name}}</p>
+
+<button action="/users/{{ user.id }}/edit" method="GET">Edit</button>
+<button action="/users/{{ user.id }}/delete" method="POST">Delete</button>
+
+{%endblock%}

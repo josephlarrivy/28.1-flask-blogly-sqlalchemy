@@ -13,8 +13,12 @@ class User(db.Model):
 
     @classmethod
     def full_name(self):
-        """Return full name of user."""
         return f"{self.first_name} {self.last_name}"
+
+
+
+
+
 
 
 def connect_db(app):
